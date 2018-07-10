@@ -12,23 +12,16 @@ app.post('/', (req, res, next) => {
   var receivedData;
 
   req.on('data', function(data){
+    console.log('The server is processing the request...')
     var receivedData = JSON.parse(data);
     var convertedData = convertData(receivedData);
-    console.log(convertedData);
-  }) 
-
-  req.on('end', function(){
-    console.log('We have recieved the data and need to format it')
+    console.log('The data has veen processed: ', convertedData);
+  })
+  .on('end', function(){
+    res.send('This is the POST response')
     next();
   })
 })
-
-app.post('/', (req, res) => {
-  // We will use this middleware to send the data.
-
-  res.send('This is the POST response');
-})
-
 
 app.listen(3000, () => console.log('The server is listening on port 3000!')); 
 
