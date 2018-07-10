@@ -11,7 +11,7 @@ const convertData = require('./formatData');
 
 app.use(express.static(clientDirectory));
 
-app.get('/', (req, res) => {
+app.get('/senddata', (req, res) => {
   res.send('This is the GET response');
 });
 
