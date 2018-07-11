@@ -1,15 +1,16 @@
-// <textarea id="inputBox" rows="20" cols="60"></textarea>
-// <input type="submit" id="addFieldSubmit" value="Convert!">
-
-
 // Create click event handler for element with id="addFieldSubmit" (GET to)
 $('#convert').click((e) => {
   e.preventDefault();
+  const requestData = JSON.parse($('#inputBox').val());
+
   $.ajax({
     url: 'http://localhost:3000/senddata',
-    method: 'GET',
-  })
-  .done((data) => console.log(data))
-  .fail((err) => console.log('An Error Occurred: ', err))
-  .always(() => console.log('Request Completed!'));
+    method: 'POST',
+    dataType: 'json',
+    data: requestData,
+    complete: function(data) { 
+      $('#results').text(data.responseText);
+      console.log('Success! Data recieved: ', data.responseText); 
+    },
+  });
 });

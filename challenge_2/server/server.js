@@ -6,34 +6,28 @@ const path = require('path');
 
 const clientDirectory = path.dirname(__dirname) + '/client';
 
+const bodyParser = require('body-parser');
+
 const convertData = require('./formatData');
 
 
 app.use(express.static(clientDirectory));
 
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(bodyParser.json());
+
 app.get('/senddata', (req, res) => {
-  res.send('This is the GET response');
+  res.send('GET Request Successful');
 });
 
-app.use((req, res, next) => {
-  console.log('A request has been recieved!');
-  next();
-});
-
-app.post('/', (req, res, next) => {
-  // We will use this middleware to confirm receipt of the data
-  let receivedData;
-
-  req.on('data', (data) => {
-    console.log('The server is processing the request...');
-    receivedData = JSON.parse(data);
-    const convertedData = convertData(receivedData);
-    console.log('The data has veen processed: ', convertedData);
-  })
-    .on('end', () => {
-      res.send('This is the POST response');
-      next();
-    });
+app.post('/senddata', (req, res, next) => {
+  convertData(req.body, (convertedData) => {
+    // console.log('the newly converted data is: ', convertedData);
+    console.log(convertedData)
+    res.status(200).send(convertedData);
+    next();
+  });
 });
 
 app.listen(3000, () => console.log('The server is listening on port 3000!'));
