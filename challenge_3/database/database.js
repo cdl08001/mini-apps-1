@@ -31,6 +31,7 @@ PRIMARY KEY (User_ID)
 */
 connection.query(`CREATE TABLE IF NOT EXISTS users (
                   user_id INT NOT NULL AUTO_INCREMENT, 
+                  user_name VARCHAR(50) NOT NULL,
                   email VARCHAR(100) NOT NULL, 
                   password VARCHAR(50) NOT NULL, 
                   PRIMARY KEY(user_id));`, 
@@ -54,7 +55,7 @@ connection.query(`CREATE TABLE IF NOT EXISTS addresses (
                   address_id INT NOT NULL AUTO_INCREMENT, 
                   user_id INT NOT NULL,
                   address_1 VARCHAR(100) NOT NULL, 
-                  address_2 VARCHAR(100) NOT NULL, 
+                  address_2 VARCHAR(100) NULL, 
                   city VARCHAR(100) NOT NULL, 
                   state VARCHAR(50) NOT NULL, 
                   zip_code INT NOT NULL, 
@@ -83,7 +84,7 @@ FOREIGN KEY (user_ID)
 connection.query(`CREATE TABLE IF NOT EXISTS payment_type (
                   payment_id INT NOT NULL AUTO_INCREMENT, 
                   user_id INT NOT NULL,
-                  cc INT NOT NULL,
+                  cc VARCHAR(19) NOT NULL,
                   billing_zip INT NOT NULL, 
                   PRIMARY KEY(payment_id), 
                   FOREIGN KEY(user_id)
@@ -97,14 +98,14 @@ connection.query(`CREATE TABLE IF NOT EXISTS payment_type (
 
 /*
 Users:
-+----------+--------------+------+-----+---------+----------------+
-| Field    | Type         | Null | Key | Default | Extra          |
-+----------+--------------+------+-----+---------+----------------+
-| user_id  | int(11)      | NO   | PRI | NULL    | auto_increment |
-| email    | varchar(100) | NO   |     | NULL    |                |
-| password | varchar(50)  | NO   |     | NULL    |                |
-+----------+--------------+------+-----+---------+----------------+
-
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| user_id   | int(11)      | NO   | PRI | NULL    | auto_increment |
+| user_name | varchar(50)  | NO   |     | NULL    |                |
+| email     | varchar(100) | NO   |     | NULL    |                |
+| password  | varchar(50)  | NO   |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
 Addresses:
 +--------------+--------------+------+-----+---------+----------------+
 | Field        | Type         | Null | Key | Default | Extra          |
@@ -128,5 +129,22 @@ Payment_Type:
 | cc          | int(11) | NO   |     | NULL    |                |
 | billing_zip | int(11) | NO   |     | NULL    |                |
 +-------------+---------+------+-----+---------+----------------+
+
+TEST DATA:
+
+INSERT INTO users (user_name, email, password) VALUES ('Cal', 'calin.lewis@gmail.com', 'password');
+INSERT INTO payment_type (user_id, cc, billing_zip) VALUES (1, '1234567890123456789', '94108');
+INSERT INTO addresses (user_id, address_1, city, state, zip_code, phone_number) VALUES (1, '000 California street', 'San Francisco', 'California', '94108', '1111111111');
+
+TEST QUERY:
+SELECT addresses.address_1 FROM addresses INNER JOIN users ON addresses.user_id = users.user_id WHERE users.user_name = 'Cal';
+
+Result:
++-----------------------+
+| address_1             |
++-----------------------+
+| 000 California street |
++-----------------------+
+
 
 */
