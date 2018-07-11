@@ -1,3 +1,4 @@
+const exportReport = require('./exportReport');
 // Data Formatting function:
 
 let convertData = (dataObject, callback) => {
@@ -42,9 +43,11 @@ let convertData = (dataObject, callback) => {
   // Call convertData on parsed data:
   formatText(dataObject);
 
-
-  // Return string.
+  // Return string to our server once complete:
   callback(results);
+
+  // Initiate export of the CSV file:
+  exportReport(results);
 };
 
 module.exports = convertData;

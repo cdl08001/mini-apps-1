@@ -23,8 +23,6 @@ app.get('/senddata', (req, res) => {
 
 app.post('/senddata', (req, res, next) => {
   convertData(req.body, (convertedData) => {
-    // console.log('the newly converted data is: ', convertedData);
-    console.log(convertedData)
     res.status(200).send(convertedData);
     next();
   });

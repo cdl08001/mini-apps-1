@@ -10,7 +10,7 @@ $('#convert').click((e) => {
     data: requestData,
     complete: function(data) { 
       $('#results').text(data.responseText);
-      console.log('Success! Data recieved: ', data.responseText); 
+      console.log('Success! Data recieved: ', data.responseText);
     },
   });
 });
