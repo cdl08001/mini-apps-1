@@ -1,7 +1,5 @@
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41,68 +39,70 @@ var Checkout = function (_React$Component) {
   }
 
   _createClass(Checkout, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.toggleView();
-    }
-  }, {
     key: 'toggleView',
     value: function toggleView() {
-      console.log('I AM TOGGLING!');
-      if (this.state.currentForm = 'home') {
-        $('.home').show();
-        $('#form1').hide();
-        $('#form2').hide();
-        $('#form3').hide();
-        $('#form4').hide();
-      } else if (this.state.currentForm = 'form1') {
-        $('#form1').hide();
-        $('#form2').show();
-      } else if (this.state.currentForm = 'form2') {
-        $('#form2').hide();
-        $('#form3').show();
-      } else if (this.state.currentForm = 'form3') {
-        $('#form3').hide();
-        $('#form4').show();
-      } else {
-        $('#form4').hide();
-        $('.home').show();
+      if (this.state.currentForm === 'form4') {
+        return React.createElement(
+          'div',
+          null,
+          React.createElement(Form4, { registerClick: this.registerClick,
+            state: this.state })
+        );
+      } else if (this.state.currentForm === 'form3') {
+        return React.createElement(
+          'div',
+          null,
+          React.createElement(Form3, { registerClick: this.registerClick })
+        );
+      } else if (this.state.currentForm === 'form2') {
+        return React.createElement(
+          'div',
+          null,
+          React.createElement(Form2, { registerClick: this.registerClick })
+        );
+      } else if (this.state.currentForm === 'form1') {
+        return React.createElement(
+          'div',
+          null,
+          React.createElement(Form1, { registerClick: this.registerClick })
+        );
+      } else if (this.state.currentForm === 'home') {
+        return React.createElement(
+          'div',
+          null,
+          React.createElement(
+            'div',
+            { className: 'home' },
+            'Welcome to Checkout!'
+          ),
+          React.createElement(
+            'button',
+            { id: 'start', onClick: this.registerClick },
+            'Start Checkout'
+          )
+        );
       }
     }
   }, {
     key: 'registerClick',
     value: function registerClick(e) {
-      console.log(_typeof(e.target.id));
       if (e.target.id === 'start') {
-        this.setState({ currentForm: 'form1' }, function () {
-          this.toggleView();
-        });
+        this.setState({ currentForm: 'form1' });
+      } else if (e.target.id === 'form1') {
+        this.setState({ currentForm: 'form2' });
+      } else if (e.target.id === 'form2') {
+        this.setState({ currentForm: 'form3' });
+      } else if (e.target.id === 'form3') {
+        this.setState({ currentForm: 'form4' });
+      } else {
+        this.setState({ currentForm: 'start' });
       }
     }
   }, {
-    key: 'handleChange',
-    value: function handleChange() {}
-  }, {
     key: 'render',
     value: function render() {
-      return React.createElement(
-        'div',
-        null,
-        React.createElement(
-          'div',
-          { className: 'home' },
-          'Welcome to Checkout!'
-        ),
-        React.createElement(Form1, { registerClick: this.registerClick }),
-        React.createElement(Form2, { registerClick: this.registerClick }),
-        React.createElement(Form3, { registerClick: this.registerClick }),
-        React.createElement(Form4, { registerClick: this.registerClick }),
-        React.createElement(
-          'button',
-          { id: 'start', onClick: this.registerClick },
-          'Start Checkout'
-        )
-      );
+      console.log(this.state.currentForm);
+      return this.toggleView();
     }
   }]);
 
@@ -110,6 +110,7 @@ var Checkout = function (_React$Component) {
 }(React.Component);
 
 var Form1 = function Form1(props) {
+  console.log(props.registerClick);
   return React.createElement(
     'div',
     { id: 'form1' },
@@ -124,13 +125,12 @@ var Form1 = function Form1(props) {
       React.createElement('input', { type: 'text', placeholder: 'User Name' }),
       React.createElement('input', { type: 'text', placeholder: 'Email Address' }),
       React.createElement('input', { type: 'password', placeholder: 'Password' }),
-      React.createElement('input', { type: 'submit', id: 'userInfo', onSubmit: props.registerClick, value: 'Submit' })
+      React.createElement('input', { type: 'button', id: 'form1', onClick: props.registerClick, value: 'Next' })
     )
   );
 };
 
 var Form2 = function Form2(props) {
-
   return React.createElement(
     'div',
     { id: 'form2' },
@@ -138,12 +138,21 @@ var Form2 = function Form2(props) {
       'h1',
       null,
       'Enter Your Address Information!'
+    ),
+    React.createElement(
+      'form',
+      null,
+      React.createElement('input', { type: 'text', placeholder: 'address1' }),
+      React.createElement('input', { type: 'text', placeholder: 'address2' }),
+      React.createElement('input', { type: 'text', placeholder: 'city' }),
+      React.createElement('input', { type: 'text', placeholder: 'state' }),
+      React.createElement('input', { type: 'text', placeholder: 'zip' }),
+      React.createElement('input', { type: 'button', id: 'form2', onClick: props.registerClick, value: 'Next' })
     )
   );
 };
 
 var Form3 = function Form3(props) {
-
   return React.createElement(
     'div',
     { id: 'form3' },
@@ -151,12 +160,21 @@ var Form3 = function Form3(props) {
       'h1',
       null,
       'Enter Your Payment Method!'
+    ),
+    React.createElement(
+      'form',
+      null,
+      React.createElement('input', { type: 'text', placeholder: 'cc' }),
+      React.createElement('input', { type: 'text', placeholder: 'expiration' }),
+      React.createElement('input', { type: 'text', placeholder: 'cvv' }),
+      React.createElement('input', { type: 'text', placeholder: 'billingZip' }),
+      React.createElement('input', { type: 'button', id: 'form3', onClick: props.registerClick, value: 'Next' })
     )
   );
 };
 
 var Form4 = function Form4(props) {
-
+  console.log(props.state);
   return React.createElement(
     'div',
     { id: 'form4' },
@@ -164,6 +182,76 @@ var Form4 = function Form4(props) {
       'h1',
       null,
       'Please Confirm The Below!'
+    ),
+    React.createElement(
+      'ul',
+      null,
+      React.createElement(
+        'li',
+        null,
+        'Name: ',
+        props.state.name
+      ),
+      React.createElement(
+        'li',
+        null,
+        'Email: ',
+        props.state.email
+      ),
+      React.createElement(
+        'li',
+        null,
+        'Address 1: ',
+        props.state.address1
+      ),
+      React.createElement(
+        'li',
+        null,
+        'Address 2: ',
+        props.state.address2
+      ),
+      React.createElement(
+        'li',
+        null,
+        'City: ',
+        props.state.city
+      ),
+      React.createElement(
+        'li',
+        null,
+        'State: ',
+        props.state.state
+      ),
+      React.createElement(
+        'li',
+        null,
+        'Zip: ',
+        props.state.zip
+      ),
+      React.createElement(
+        'li',
+        null,
+        'Phone: ',
+        props.state.phone
+      ),
+      React.createElement(
+        'li',
+        null,
+        'Credit Card: ',
+        props.state.cc
+      ),
+      React.createElement(
+        'li',
+        null,
+        'Expiration: ',
+        props.state.expiration
+      ),
+      React.createElement(
+        'li',
+        null,
+        'Billing Zip Code: ',
+        props.state.billingZip
+      )
     )
   );
 };

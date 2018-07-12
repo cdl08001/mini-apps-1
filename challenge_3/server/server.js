@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 app.get('/', (req, res) => res.send('Hello World!'));
 
 app.post('/user', (req, res) => {
+  console.log(req);
   res.send({test: 'User post request recieved'});
 });
 
