@@ -2,6 +2,8 @@
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -18,7 +20,6 @@ var Checkout = function (_React$Component) {
 
     _this.state = {
       currentForm: 'home',
-      value: '',
       name: '',
       email: '',
       password: '',
@@ -35,6 +36,7 @@ var Checkout = function (_React$Component) {
     };
     _this.registerClick = _this.registerClick.bind(_this);
     _this.toggleView = _this.toggleView.bind(_this);
+    _this.handleChange = _this.handleChange.bind(_this);
     return _this;
   }
 
@@ -46,25 +48,32 @@ var Checkout = function (_React$Component) {
           'div',
           null,
           React.createElement(Form4, { registerClick: this.registerClick,
+            handleChange: this.handleChange,
             state: this.state })
         );
       } else if (this.state.currentForm === 'form3') {
         return React.createElement(
           'div',
           null,
-          React.createElement(Form3, { registerClick: this.registerClick })
+          React.createElement(Form3, { registerClick: this.registerClick,
+            handleChange: this.handleChange,
+            state: this.state })
         );
       } else if (this.state.currentForm === 'form2') {
         return React.createElement(
           'div',
           null,
-          React.createElement(Form2, { registerClick: this.registerClick })
+          React.createElement(Form2, { registerClick: this.registerClick,
+            handleChange: this.handleChange,
+            state: this.state })
         );
       } else if (this.state.currentForm === 'form1') {
         return React.createElement(
           'div',
           null,
-          React.createElement(Form1, { registerClick: this.registerClick })
+          React.createElement(Form1, { registerClick: this.registerClick,
+            handleChange: this.handleChange,
+            state: this.state })
         );
       } else if (this.state.currentForm === 'home') {
         return React.createElement(
@@ -99,6 +108,12 @@ var Checkout = function (_React$Component) {
       }
     }
   }, {
+    key: 'handleChange',
+    value: function handleChange(e) {
+      var stateElement = e.target.id;
+      this.setState(_defineProperty({}, stateElement, e.target.value));
+    }
+  }, {
     key: 'render',
     value: function render() {
       console.log(this.state.currentForm);
@@ -110,7 +125,7 @@ var Checkout = function (_React$Component) {
 }(React.Component);
 
 var Form1 = function Form1(props) {
-  console.log(props.registerClick);
+  console.log(props);
   return React.createElement(
     'div',
     { id: 'form1' },
@@ -122,9 +137,9 @@ var Form1 = function Form1(props) {
     React.createElement(
       'form',
       null,
-      React.createElement('input', { type: 'text', placeholder: 'User Name' }),
-      React.createElement('input', { type: 'text', placeholder: 'Email Address' }),
-      React.createElement('input', { type: 'password', placeholder: 'Password' }),
+      React.createElement('input', { type: 'text', id: 'name', onChange: props.handleChange, value: props.state.name, placeholder: 'User Name' }),
+      React.createElement('input', { type: 'text', id: 'email', onChange: props.handleChange, value: props.state.email, placeholder: 'Email Address' }),
+      React.createElement('input', { type: 'password', id: 'password', onChange: props.handleChange, value: props.state.password, placeholder: 'Password' }),
       React.createElement('input', { type: 'button', id: 'form1', onClick: props.registerClick, value: 'Next' })
     )
   );
@@ -142,11 +157,12 @@ var Form2 = function Form2(props) {
     React.createElement(
       'form',
       null,
-      React.createElement('input', { type: 'text', placeholder: 'address1' }),
-      React.createElement('input', { type: 'text', placeholder: 'address2' }),
-      React.createElement('input', { type: 'text', placeholder: 'city' }),
-      React.createElement('input', { type: 'text', placeholder: 'state' }),
-      React.createElement('input', { type: 'text', placeholder: 'zip' }),
+      React.createElement('input', { type: 'text', id: 'address1', onChange: props.handleChange, value: props.state.address1, placeholder: 'address1' }),
+      React.createElement('input', { type: 'text', id: 'address2', onChange: props.handleChange, value: props.state.address2, placeholder: 'address2' }),
+      React.createElement('input', { type: 'text', id: 'city', onChange: props.handleChange, value: props.state.city, placeholder: 'city' }),
+      React.createElement('input', { type: 'text', id: 'state', onChange: props.handleChange, value: props.state.state, placeholder: 'state' }),
+      React.createElement('input', { type: 'text', id: 'zip', onChange: props.handleChange, value: props.state.zip, placeholder: 'zip' }),
+      React.createElement('input', { type: 'text', id: 'phone', onChange: props.handleChange, value: props.state.phone, placeholder: 'phone' }),
       React.createElement('input', { type: 'button', id: 'form2', onClick: props.registerClick, value: 'Next' })
     )
   );
@@ -164,10 +180,10 @@ var Form3 = function Form3(props) {
     React.createElement(
       'form',
       null,
-      React.createElement('input', { type: 'text', placeholder: 'cc' }),
-      React.createElement('input', { type: 'text', placeholder: 'expiration' }),
-      React.createElement('input', { type: 'text', placeholder: 'cvv' }),
-      React.createElement('input', { type: 'text', placeholder: 'billingZip' }),
+      React.createElement('input', { type: 'text', id: 'cc', onChange: props.handleChange, value: props.state.cc, placeholder: 'cc' }),
+      React.createElement('input', { type: 'text', id: 'expiration', onChange: props.handleChange, value: props.state.expiration, placeholder: 'expiration' }),
+      React.createElement('input', { type: 'text', id: 'cvv', onChange: props.handleChange, value: props.state.cvv, placeholder: 'cvv' }),
+      React.createElement('input', { type: 'text', id: 'billingZip', onChange: props.handleChange, value: props.state.billingZip, placeholder: 'billingZip' }),
       React.createElement('input', { type: 'button', id: 'form3', onClick: props.registerClick, value: 'Next' })
     )
   );
