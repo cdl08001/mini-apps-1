@@ -78,8 +78,8 @@ class Checkout extends React.Component {
     } else if (e.target.id === 'form3') {
         this.setState({currentForm: 'form4'});
 
-    } else {
-        this.setState({currentForm: 'start'});
+    } else if (e.target.id === 'goHome') {
+        this.setState({currentForm: 'home'});
     }
   }
 
@@ -160,6 +160,7 @@ let Form4 = (props) => {
         <li>Expiration: {props.state.expiration}</li>
         <li>Billing Zip Code: {props.state.billingZip}</li>
       </ul>
+      <input type='button' id='goHome' onClick={props.registerClick} value='Return Home'></input>
     </div>
   )
 }

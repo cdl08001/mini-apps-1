@@ -103,8 +103,8 @@ var Checkout = function (_React$Component) {
         this.setState({ currentForm: 'form3' });
       } else if (e.target.id === 'form3') {
         this.setState({ currentForm: 'form4' });
-      } else {
-        this.setState({ currentForm: 'start' });
+      } else if (e.target.id === 'goHome') {
+        this.setState({ currentForm: 'home' });
       }
     }
   }, {
@@ -268,7 +268,8 @@ var Form4 = function Form4(props) {
         'Billing Zip Code: ',
         props.state.billingZip
       )
-    )
+    ),
+    React.createElement('input', { type: 'button', id: 'goHome', onClick: props.registerClick, value: 'Return Home' })
   );
 };
 
